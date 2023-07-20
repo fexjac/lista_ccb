@@ -5,7 +5,7 @@
 (x) Criar o campo para cabeçalho
 (x) Salvar uma cópia da lista ***Alterar posteriormente.
 (x) Formatar estéticamente o pdf
-() Publicar no GitHub
+(x) Publicar no GitHub
 () Implementar Novos Obreiros
 () Salvar uma cópia da lista de forma editável em html
 () Formatar estéticamente o pdf de forma final
