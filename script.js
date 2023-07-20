@@ -55,6 +55,7 @@ document.getElementById('organizarBtn').addEventListener('click', function() {
     organizarCompromissosPorTipoEData();
 });
 
+// ordenando e organizando a lista de compromissos
 function organizarCompromissosPorTipoEData() {
     // Organizar os compromissos por tipo e data
     const compromissosOrganizados = {};
@@ -94,4 +95,26 @@ function organizarCompromissosPorTipoEData() {
 
         document.getElementById('listaCompromissos').appendChild(tipoCompromissoElement);
     }
+}
+
+//Gerando o PDF
+document.getElementById('gerarPDF').addEventListener('click', function() {
+    gerarPDFCompromissos();
+});
+
+function gerarPDFCompromissos() {
+    const docDefinition = {
+        content: []
+    };
+
+    compromissos.forEach(compromisso => {
+        const compromissoData = new Date(compromisso.data);
+        const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+
+        const linhaTexto = `${compromissoDataFormatted} - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
+
+        docDefinition.content.push({ text: linhaTexto });
+    });
+
+    pdfMake.createPdf(docDefinition).download('compromissos.pdf');
 }

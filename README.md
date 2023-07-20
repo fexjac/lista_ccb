@@ -6,3 +6,4 @@
 () Salvar uma cópia da lista
 () Formatar estéticamente o pdf
 () Publicar no GitHub
+() Implementar Novos Obreiros
