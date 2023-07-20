@@ -50,3 +50,48 @@ function atualizarListaCompromissos() {
         listaCompromissos.appendChild(compromissoElement);
     });
 }
+
+document.getElementById('organizarBtn').addEventListener('click', function() {
+    organizarCompromissosPorTipoEData();
+});
+
+function organizarCompromissosPorTipoEData() {
+    // Organizar os compromissos por tipo e data
+    const compromissosOrganizados = {};
+    compromissos.forEach(compromisso => {
+        if (!compromissosOrganizados[compromisso.compromisso]) {
+            compromissosOrganizados[compromisso.compromisso] = [];
+        }
+        compromissosOrganizados[compromisso.compromisso].push(compromisso);
+    });
+
+    // Limpar a lista de compromissos antes de exibir a lista organizada
+    document.getElementById('listaCompromissos').innerHTML = '';
+
+    // Exibir a lista de compromissos organizados por tipo e data
+    for (const tipoCompromisso in compromissosOrganizados) {
+        const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
+        const tipoCompromissoElement = document.createElement('div');
+        tipoCompromissoElement.classList.add('compromissos-tipo');
+
+        const tipoCompromissoTitle = document.createElement('h3');
+        tipoCompromissoTitle.textContent = tipoCompromisso;
+        tipoCompromissoElement.appendChild(tipoCompromissoTitle);
+
+        compromissosDoTipo.forEach(compromisso => {
+            const compromissoElement = document.createElement('div');
+            compromissoElement.classList.add('compromisso-item');
+
+            const compromissoData = new Date(compromisso.data);
+            const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+
+            compromissoElement.innerHTML = `
+                <strong>${compromissoDataFormatted}</strong> - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}
+            `;
+
+            tipoCompromissoElement.appendChild(compromissoElement);
+        });
+
+        document.getElementById('listaCompromissos').appendChild(tipoCompromissoElement);
+    }
+}
