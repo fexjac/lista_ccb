@@ -1,4 +1,5 @@
 let compromissos = [];
+let compromissosOrganizados = {}; // Variável global para armazenar os compromissos organizados
 
 document.getElementById('compromissoForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -29,7 +30,7 @@ document.getElementById('compromissoForm').addEventListener('submit', function(e
 });
 
 document.getElementById('gerarPDF').addEventListener('click', function() {
-    // Gerar a lista em PDF posteriormente
+    gerarPDFCompromissos();
 });
 
 function atualizarListaCompromissos() {
@@ -58,7 +59,8 @@ document.getElementById('organizarBtn').addEventListener('click', function() {
 // ordenando e organizando a lista de compromissos
 function organizarCompromissosPorTipoEData() {
     // Organizar os compromissos por tipo e data
-    const compromissosOrganizados = {};
+    compromissosOrganizados = {}; // Limpar a variável antes de organizar os compromissos
+
     compromissos.forEach(compromisso => {
         if (!compromissosOrganizados[compromisso.compromisso]) {
             compromissosOrganizados[compromisso.compromisso] = [];
@@ -97,7 +99,7 @@ function organizarCompromissosPorTipoEData() {
     }
 }
 
-//Gerando o PDF
+// Gerar PDF
 document.getElementById('gerarPDF').addEventListener('click', function() {
     gerarPDFCompromissos();
 });
@@ -117,4 +119,47 @@ function gerarPDFCompromissos() {
     });
 
     pdfMake.createPdf(docDefinition).download('compromissos.pdf');
+}
+
+// Gerar PDF organizado
+document.getElementById('gerarPDFOrganizado').addEventListener('click', function() {
+    gerarPDFCompromissosOrganizados();
+});
+
+// Função para gerar o PDF organizado
+function gerarPDFCompromissosOrganizados() {
+    const docDefinition = {
+        content: [],
+        styles: {
+            tipoCompromissoTitle: {
+                fontSize: 18,
+                bold: true,
+                margin: [0, 10]
+            },
+            compromissoItem: {
+                fontSize: 12,
+                margin: [0, 5]
+            }
+        }
+    };
+
+    for (const tipoCompromisso in compromissosOrganizados) {
+        const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
+        const tipoCompromissoTitle = { text: tipoCompromisso, style: 'tipoCompromissoTitle' };
+        docDefinition.content.push(tipoCompromissoTitle);
+
+        compromissosDoTipo.forEach(compromisso => {
+            const compromissoData = new Date(compromisso.data);
+            const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+
+            const linhaTexto = `${compromissoDataFormatted} - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
+
+            docDefinition.content.push({ text: linhaTexto, style: 'compromissoItem' });
+        });
+
+        // Adiciona um espaço entre os tipos de compromissos
+        docDefinition.content.push({ text: '', margin: [0, 10] });
+    }
+
+    pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
 }
