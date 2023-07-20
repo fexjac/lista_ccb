@@ -7,21 +7,21 @@ document.getElementById('compromissoForm').addEventListener('submit', function(e
 
     const compromissoSelect = document.getElementById('compromisso');
     const compromisso = compromissoSelect.options[compromissoSelect.selectedIndex].value;
-    const data = document.getElementById('data').value;
+    const dataHora = document.getElementById('data').value;
     const responsavel = document.getElementById('anciao').value;
     const local = document.getElementById('local').value;
 
     const novoCompromisso = {
         compromisso,
-        data,
+        dataHora,
         responsavel,
         local
     };
 
     compromissos.push(novoCompromisso);
 
-    // Ordenar os compromissos por data antes de limpar o formulário
-    compromissos.sort((a, b) => new Date(a.data) - new Date(b.data));
+    // Ordenar os compromissos por data e hora antes de limpar o formulário
+    compromissos.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
 
     // Limpar o formulário após adicionar o compromisso
     document.getElementById('compromissoForm').reset();
@@ -165,12 +165,12 @@ function gerarPDFCompromissosOrganizados() {
         ]);
 
         compromissosDoTipo.forEach((compromisso) => {
-            const compromissoData = new Date(compromisso.data);
-            const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+            const compromissoDataHora = new Date(compromisso.dataHora);
+            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
             // Adiciona uma linha à tabela para cada compromisso
             tableData.body.push([
-                { text: compromissoDataFormatted, style: 'compromissoItem' },
+                { text: compromissoDataHoraFormatted, style: 'compromissoItem' },
                 { text: compromisso.local, style: 'compromissoItem' },
                 { text: compromisso.responsavel, style: 'compromissoItem' }
             ]);

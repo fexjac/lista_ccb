@@ -6,6 +6,8 @@
 (x) Salvar uma cópia da lista ***Alterar posteriormente.
 (x) Formatar estéticamente o pdf
 (x) Publicar no GitHub
+() Implementar Hora junto da data * em desenvolvimento
 () Implementar Novos Obreiros
+() Implementar Avisos como text area.
 () Salvar uma cópia da lista de forma editável em html
 () Formatar estéticamente o pdf de forma final
