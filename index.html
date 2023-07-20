@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Missões</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Missões</h1>
+        <form id="compromissoForm">
+            <label for="compromisso">Missão:</label>
+            <select id="compromisso" required>
+                <option value="" disabled selected>Selecione a missão</option>
+                <option value="Ensaio Regional">Ensaio Regional</option>
+                <option value="Reunião para Mocidade">Reunião Para Mocidade</option>
+                <option value="Santa Ceia">Santa Ceia</option>
+                <option value="Batismos">Batismos</option>
+                <option value="Avisos">Avisos</option>
+            </select>
+            <label for="data">Data:</label>
+            <input type="date" id="data" required>
+            <label for="anciao">Ancião:</label>
+            <input type="text" id="anciao" required>
+            <label for="local">Local:</label>
+            <input type="text" id="local" required>
+            <button type="submit">Criar Missão</button>
+        </form>
+        <button id="gerarPDF">Gerar PDF</button>
+        <div id="listaCompromissos"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
