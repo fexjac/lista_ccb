@@ -128,7 +128,9 @@ document.getElementById('gerarPDFOrganizado').addEventListener('click', function
 
 // Função para gerar o PDF organizado
 function gerarPDFCompromissosOrganizados() {
+    const cabecalho = document.getElementById('cabecalho').value; // Obtém o valor do campo de cabeçalho
     const docDefinition = {
+        header: cabecalho || '', // Utiliza o cabeçalho digitado ou uma string vazia se não houver cabeçalho
         content: [],
         styles: {
             tipoCompromissoTitle: {
