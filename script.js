@@ -165,3 +165,25 @@ function gerarPDFCompromissosOrganizados() {
 
     pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
 }
+
+// Evento de clique para o botão "Salvar Lista"
+document.getElementById('salvarLista').addEventListener('click', function() {
+    salvarListaCompromissos();
+});
+
+// Função para salvar a lista de compromissos em um arquivo
+function salvarListaCompromissos() {
+    // Obtém todo o conteúdo da página principal (incluindo o formulário e botões)
+    const paginaCompleta = document.documentElement.outerHTML;
+
+    // Cria um objeto Blob com o conteúdo da página
+    const blob = new Blob([paginaCompleta], { type: 'text/html' });
+
+    // Cria um link para download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'pagina_principal.html';
+
+    // Clica no link para iniciar o download
+    link.click();
+}
