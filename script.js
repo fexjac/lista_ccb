@@ -42,11 +42,11 @@ function atualizarListaCompromissos() {
         const compromissoElement = document.createElement('div');
         compromissoElement.classList.add('compromisso-item');
 
-        const compromissoData = new Date(compromisso.data);
-        const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+        const compromissoDataHora = new Date(compromisso.dataHora);
+        const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
         compromissoElement.innerHTML = `
-            <strong>${compromissoDataFormatted}</strong> - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}
+            <strong>${compromissoDataHoraFormatted}</strong> - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}
         `;
 
         listaCompromissos.appendChild(compromissoElement);
@@ -86,11 +86,11 @@ function organizarCompromissosPorTipoEData() {
             const compromissoElement = document.createElement('div');
             compromissoElement.classList.add('compromisso-item');
 
-            const compromissoData = new Date(compromisso.data);
-            const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+            const compromissoDataHora = new Date(compromisso.dataHora);
+            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
             compromissoElement.innerHTML = `
-                <strong>${compromissoDataFormatted}</strong> - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}
+                <strong>${compromissoDataHoraFormatted}</strong> - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}
             `;
 
             tipoCompromissoElement.appendChild(compromissoElement);
@@ -99,6 +99,7 @@ function organizarCompromissosPorTipoEData() {
         document.getElementById('listaCompromissos').appendChild(tipoCompromissoElement);
     }
 }
+
 
 // Gerar PDF
 document.getElementById('gerarPDF').addEventListener('click', function() {
