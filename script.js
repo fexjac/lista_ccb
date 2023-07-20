@@ -1,5 +1,6 @@
 let compromissos = [];
 let compromissosOrganizados = {}; // Variável global para armazenar os compromissos organizados
+let cabecalhoPDF = 'Congregação Cristã no Brasil';
 
 document.getElementById('compromissoForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -128,9 +129,8 @@ document.getElementById('gerarPDFOrganizado').addEventListener('click', function
 
 // Função para gerar o PDF organizado
 function gerarPDFCompromissosOrganizados() {
-    const cabecalho = document.getElementById('cabecalho').value; // Obtém o valor do campo de cabeçalho
     const docDefinition = {
-        header: cabecalho || '', // Utiliza o cabeçalho digitado ou uma string vazia se não houver cabeçalho
+        header: cabecalhoPDF, // Utiliza o valor do cabeçalho armazenado na variável global
         content: [],
         styles: {
             tipoCompromissoTitle: {
@@ -139,7 +139,7 @@ function gerarPDFCompromissosOrganizados() {
                 margin: [0, 10]
             },
             compromissoItem: {
-                fontSize: 12,
+                fontSize: 10, // Altera o tamanho da fonte para 10
                 margin: [0, 5]
             }
         }
@@ -147,17 +147,37 @@ function gerarPDFCompromissosOrganizados() {
 
     for (const tipoCompromisso in compromissosOrganizados) {
         const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
-        const tipoCompromissoTitle = { text: tipoCompromisso, style: 'tipoCompromissoTitle' };
-        docDefinition.content.push(tipoCompromissoTitle);
+        
+        // Criação de tabelas para alinhar os dados
+        const tableData = {
+            widths: ['auto', 'auto', 'auto'], // Define as larguras das colunas da tabela
+            body: []
+        };
 
-        compromissosDoTipo.forEach(compromisso => {
+        // Adiciona o título do tipo de compromisso como uma célula acima da tabela
+        tableData.body.push([{ text: tipoCompromisso, colSpan: 3, style: 'tipoCompromissoTitle', alignment: 'center' }, {}, {}]);
+        
+        // Cabeçalho da tabela com os títulos "Data", "Local" e "Ancião"
+        tableData.body.push([
+            { text: 'Data', style: 'compromissoItem', bold: true },
+            { text: 'Local', style: 'compromissoItem', bold: true },
+            { text: 'Ancião', style: 'compromissoItem', bold: true }
+        ]);
+
+        compromissosDoTipo.forEach((compromisso) => {
             const compromissoData = new Date(compromisso.data);
             const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
 
-            const linhaTexto = `${compromissoDataFormatted} - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
-
-            docDefinition.content.push({ text: linhaTexto, style: 'compromissoItem' });
+            // Adiciona uma linha à tabela para cada compromisso
+            tableData.body.push([
+                { text: compromissoDataFormatted, style: 'compromissoItem' },
+                { text: compromisso.local, style: 'compromissoItem' },
+                { text: compromisso.responsavel, style: 'compromissoItem' }
+            ]);
         });
+
+        // Adiciona a tabela ao conteúdo do PDF
+        docDefinition.content.push({ table: tableData, alignment: 'center' });
 
         // Adiciona um espaço entre os tipos de compromissos
         docDefinition.content.push({ text: '', margin: [0, 10] });
