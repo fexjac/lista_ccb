@@ -10,4 +10,4 @@
 - [ ] Implementar Novos Obreiros
 - [ ] Implementar Avisos como text area.
 - [ ] Salvar uma cópia da lista de forma editável em html
-- [ ] Formatar estéticamente o pdf de forma final
+- [x] Formatar estéticamente o pdf de forma final
