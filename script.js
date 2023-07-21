@@ -112,10 +112,10 @@ function gerarPDFCompromissos() {
     };
 
     compromissos.forEach(compromisso => {
-        const compromissoData = new Date(compromisso.data);
-        const compromissoDataFormatted = `${compromissoData.getDate()}/${compromissoData.getMonth() + 1}/${compromissoData.getFullYear()}`;
+        const compromissoDataHora = new Date(compromisso.dataHora);
+        const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
-        const linhaTexto = `${compromissoDataFormatted} - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
+        const linhaTexto = `${compromissoDataHoraFormatted} - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
 
         docDefinition.content.push({ text: linhaTexto });
     });
