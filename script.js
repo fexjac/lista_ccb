@@ -155,7 +155,7 @@ function gerarPDFCompromissosOrganizados() {
 
         // Criação de tabelas para alinhar os dados
         const tableData = {
-            widths: [60, 90, 65], // Define as larguras das colunas da tabela
+            widths: [69, 90, 65], // Define as larguras das colunas da tabela
             body: []
         };
 
@@ -171,7 +171,8 @@ function gerarPDFCompromissosOrganizados() {
 
         compromissosDoTipo.forEach((compromisso) => {
             const compromissoDataHora = new Date(compromisso.dataHora);
-            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear().toString().slice(-2)} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
+            const diaSemanaAbreviado = compromissoDataHora.toLocaleString('pt-BR', { weekday: 'short' }).toUpperCase();
+const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1} ${diaSemanaAbreviado} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
             // Adiciona uma linha à tabela para cada compromisso
             tableData.body.push([
