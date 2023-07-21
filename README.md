@@ -6,8 +6,8 @@
 - [x] Salvar uma cópia da lista ***Alterar posteriormente.
 - [x] Formatar estéticamente o pdf
 - [x] Publicar no GitHub
-- [ ] Implementar Hora junto da data * em desenvolvimento
+- [x] Implementar Hora junto da data * em desenvolvimento
 - [ ] Implementar Novos Obreiros
 - [ ] Implementar Avisos como text area.
-- [ ] Salvar uma cópia da lista de forma editável em html
+- [ ] Salvar uma cópia da lista de forma editável
 - [x] Formatar estéticamente o pdf de forma final
