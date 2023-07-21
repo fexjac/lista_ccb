@@ -132,7 +132,7 @@ document.getElementById('gerarPDFOrganizado').addEventListener('click', function
 function gerarPDFCompromissosOrganizados() {
     const docDefinition = {
         pageSize: 'A4',
-        pageOrientation: 'landscape',
+        pageOrientation: 'portrait',
         content: [],
         styles: {
             tipoCompromissoTitle: {
@@ -141,8 +141,8 @@ function gerarPDFCompromissosOrganizados() {
                 margin: [0, 5]
             },
             compromissoItem: {
-                fontSize: 10,
-                margin: [0, 5]
+                fontSize: 9 ,
+                margin: [0, 2]
             }
         }
     };
@@ -154,7 +154,7 @@ function gerarPDFCompromissosOrganizados() {
 
         // Criação de tabelas para alinhar os dados
         const tableData = {
-            widths: ['auto', 'auto', 'auto'], // Define as larguras das colunas da tabela
+            widths: [70, 90, 65], // Define as larguras das colunas da tabela
             body: []
         };
 
@@ -190,9 +190,9 @@ function gerarPDFCompromissosOrganizados() {
     }
 
     // Adiciona o cabeçalho à primeira coluna (alteração aqui)
-    colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 18, bold: true, margin: [0, 10] });
+    colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
     // Adiciona o cabeçalho à segunda coluna (alteração aqui)
-    colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 18, bold: true, margin: [0, 10] });
+    colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
 
     // Adiciona as colunas ao conteúdo do PDF (alteração aqui)
     docDefinition.content.push({ columns: colunas });
