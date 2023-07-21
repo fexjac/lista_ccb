@@ -8,6 +8,6 @@
 - [x] Publicar no GitHub
 - [x] Implementar Hora junto da data * em desenvolvimento
 - [ ] Implementar Novos Obreiros
-- [ ] Implementar Avisos como text area.
+- [ ] Implementar Avisos como 
 - [ ] Salvar uma cópia da lista de forma editável
 - [x] Formatar estéticamente o pdf de forma final
