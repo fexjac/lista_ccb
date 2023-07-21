@@ -138,10 +138,11 @@ function gerarPDFCompromissosOrganizados() {
             tipoCompromissoTitle: {
                 fontSize: 11,
                 bold: true,
-                margin: [0, 5]
+                margin: [0, 2],
+                fillColor: '#CCCCCC' // Adiciona a cor de fundo para as células do tipo de compromisso
             },
             compromissoItem: {
-                fontSize: 9 ,
+                fontSize: 9,
                 margin: [0, 2]
             }
         }
@@ -154,7 +155,7 @@ function gerarPDFCompromissosOrganizados() {
 
         // Criação de tabelas para alinhar os dados
         const tableData = {
-            widths: [70, 90, 65], // Define as larguras das colunas da tabela
+            widths: [60, 90, 65], // Define as larguras das colunas da tabela
             body: []
         };
 
@@ -170,7 +171,7 @@ function gerarPDFCompromissosOrganizados() {
 
         compromissosDoTipo.forEach((compromisso) => {
             const compromissoDataHora = new Date(compromisso.dataHora);
-            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
+            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear().toString().slice(-2)} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
             // Adiciona uma linha à tabela para cada compromisso
             tableData.body.push([
@@ -185,8 +186,8 @@ function gerarPDFCompromissosOrganizados() {
         colunas[1].stack.push({ table: JSON.parse(JSON.stringify(tableData)), alignment: 'center' });
 
         // Adiciona um espaço entre os tipos de compromissos
-        colunas[0].stack.push({ text: '', margin: [0, 10] });
-        colunas[1].stack.push({ text: '', margin: [0, 10] });
+        colunas[0].stack.push({ text: '', margin: [0, 5] });
+        colunas[1].stack.push({ text: '', margin: [0, 5] });
     }
 
     // Adiciona o cabeçalho à primeira coluna (alteração aqui)
@@ -199,6 +200,7 @@ function gerarPDFCompromissosOrganizados() {
 
     pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
 }
+
 
 
 // Evento de clique para o botão "Salvar Lista"
