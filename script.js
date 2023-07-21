@@ -131,24 +131,27 @@ document.getElementById('gerarPDFOrganizado').addEventListener('click', function
 // Função para gerar o PDF organizado
 function gerarPDFCompromissosOrganizados() {
     const docDefinition = {
-        header: cabecalhoPDF, // Utiliza o valor do cabeçalho armazenado na variável global
+        pageSize: 'A4',
+        pageOrientation: 'landscape',
         content: [],
         styles: {
             tipoCompromissoTitle: {
-                fontSize: 18,
+                fontSize: 11,
                 bold: true,
-                margin: [0, 10]
+                margin: [0, 5]
             },
             compromissoItem: {
-                fontSize: 10, // Altera o tamanho da fonte para 10
+                fontSize: 10,
                 margin: [0, 5]
             }
         }
     };
 
+    const colunas = [{ stack: [] }, { stack: [] }]; // Criando duas colunas
+
     for (const tipoCompromisso in compromissosOrganizados) {
         const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
-        
+
         // Criação de tabelas para alinhar os dados
         const tableData = {
             widths: ['auto', 'auto', 'auto'], // Define as larguras das colunas da tabela
@@ -157,7 +160,7 @@ function gerarPDFCompromissosOrganizados() {
 
         // Adiciona o título do tipo de compromisso como uma célula acima da tabela
         tableData.body.push([{ text: tipoCompromisso, colSpan: 3, style: 'tipoCompromissoTitle', alignment: 'center' }, {}, {}]);
-        
+
         // Cabeçalho da tabela com os títulos "Data", "Local" e "Ancião"
         tableData.body.push([
             { text: 'Data', style: 'compromissoItem', bold: true },
@@ -177,15 +180,26 @@ function gerarPDFCompromissosOrganizados() {
             ]);
         });
 
-        // Adiciona a tabela ao conteúdo do PDF
-        docDefinition.content.push({ table: tableData, alignment: 'center' });
+        // Adiciona a tabela ao conteúdo da coluna correspondente (alteração aqui)
+        colunas[0].stack.push({ table: JSON.parse(JSON.stringify(tableData)), alignment: 'center' });
+        colunas[1].stack.push({ table: JSON.parse(JSON.stringify(tableData)), alignment: 'center' });
 
         // Adiciona um espaço entre os tipos de compromissos
-        docDefinition.content.push({ text: '', margin: [0, 10] });
+        colunas[0].stack.push({ text: '', margin: [0, 10] });
+        colunas[1].stack.push({ text: '', margin: [0, 10] });
     }
+
+    // Adiciona o cabeçalho à primeira coluna (alteração aqui)
+    colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 18, bold: true, margin: [0, 10] });
+    // Adiciona o cabeçalho à segunda coluna (alteração aqui)
+    colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 18, bold: true, margin: [0, 10] });
+
+    // Adiciona as colunas ao conteúdo do PDF (alteração aqui)
+    docDefinition.content.push({ columns: colunas });
 
     pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
 }
+
 
 // Evento de clique para o botão "Salvar Lista"
 document.getElementById('salvarLista').addEventListener('click', function() {
