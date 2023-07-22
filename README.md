@@ -8,7 +8,7 @@
 - [x] Publicar no GitHub
 - [x] Implementar Hora junto da data * em desenvolvimento
 - [x] Implementar Novos Obreiros
-- [ ] Implementar Avisos como 
+- [x] Implementar Avisos
 - [ ] Salvar uma cópia da lista de forma editável
 - [x] Formatar estéticamente o pdf de forma final
 - [ ] Criar formatação do cabeçalho para personalizar localidade e data
