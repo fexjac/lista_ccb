@@ -1,6 +1,7 @@
 let compromissos = [];
 let obreiros = []; // Array para armazenar os obreiros
 let compromissosOrganizados = {}; // Variável global para armazenar os compromissos organizados
+let obreirosOrganizados = {};
 let cabecalhoPDF = 'Congregação Cristã no Brasil';
 
 document.getElementById('compromissoForm').addEventListener('submit', function(event) {
@@ -146,7 +147,7 @@ function organizarCompromissosPorTipoEData() {
 }
 
 function organizarObreirosPorMinisterio() {
-    const obreirosOrganizados = {}; // Objeto para armazenar os obreiros organizados por ministério
+    obreirosOrganizados = {}; // Reiniciando a variável antes de organizar novamente os obreiros
 
     obreiros.forEach(obreiro => {
         if (!obreirosOrganizados[obreiro.ministerio]) {
@@ -230,15 +231,16 @@ function gerarPDFCompromissosOrganizados() {
 
     const colunas = [{ stack: [] }, { stack: [] }];
 
+    // Inserir compromissos organizados no PDF
     for (const tipoCompromisso in compromissosOrganizados) {
         const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
-        const tableData = {
+        const tableDataCompromissos = {
             widths: [69, 90, 65],
             body: []
         };
 
-        tableData.body.push([{ text: tipoCompromisso, colSpan: 3, style: 'tipoCompromissoTitle', alignment: 'center' }, {}, {}]);
-        tableData.body.push([
+        tableDataCompromissos.body.push([{ text: tipoCompromisso, colSpan: 3, style: 'tipoCompromissoTitle', alignment: 'center' }, {}, {}]);
+        tableDataCompromissos.body.push([
             { text: 'Data', style: 'compromissoItem', bold: true },
             { text: 'Local', style: 'compromissoItem', bold: true },
             { text: 'Ancião', style: 'compromissoItem', bold: true }
@@ -249,15 +251,42 @@ function gerarPDFCompromissosOrganizados() {
             const diaSemanaAbreviado = compromissoDataHora.toLocaleString('pt-BR', { weekday: 'short' }).toUpperCase();
             const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1} ${diaSemanaAbreviado} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
-            tableData.body.push([
+            tableDataCompromissos.body.push([
                 { text: compromissoDataHoraFormatted, style: 'compromissoItem' },
                 { text: compromisso.local, style: 'compromissoItem' },
                 { text: compromisso.responsavel, style: 'compromissoItem' }
             ]);
         });
 
-        colunas[0].stack.push({ table: JSON.parse(JSON.stringify(tableData)), alignment: 'center' });
-        colunas[1].stack.push({ table: JSON.parse(JSON.stringify(tableData)), alignment: 'center' });
+        colunas[0].stack.push({ table: JSON.parse(JSON.stringify(tableDataCompromissos)), alignment: 'center' });
+        colunas[1].stack.push({ table: JSON.parse(JSON.stringify(tableDataCompromissos)), alignment: 'center' });
+        colunas[0].stack.push({ text: '', margin: [0, 5] });
+        colunas[1].stack.push({ text: '', margin: [0, 5] });
+    }
+
+    // Inserir obreiros organizados no PDF
+    for (const ministerio in obreirosOrganizados) {
+        const obreirosDoMinisterio = obreirosOrganizados[ministerio];
+        const tableDataObreiros = {
+            widths: [115, 118],
+            body: []
+        };
+
+        tableDataObreiros.body.push([{ text: ministerio, colSpan: 2, style: 'tipoCompromissoTitle', alignment: 'center' }, {}]);
+        tableDataObreiros.body.push([
+            { text: 'Nome', style: 'compromissoItem', bold: true },
+            { text: 'Local', style: 'compromissoItem', bold: true },
+        ]);
+
+        obreirosDoMinisterio.forEach((obreiro) => {
+            tableDataObreiros.body.push([
+                { text: obreiro.nomeObreiro, style: 'compromissoItem' },
+                { text: obreiro.localObreiro, style: 'compromissoItem' }
+            ]);
+        });
+
+        colunas[0].stack.push({ table: JSON.parse(JSON.stringify(tableDataObreiros)), alignment: 'center' });
+        colunas[1].stack.push({ table: JSON.parse(JSON.stringify(tableDataObreiros)), alignment: 'center' });
         colunas[0].stack.push({ text: '', margin: [0, 5] });
         colunas[1].stack.push({ text: '', margin: [0, 5] });
     }
@@ -267,8 +296,14 @@ function gerarPDFCompromissosOrganizados() {
 
     docDefinition.content.push({ columns: colunas });
 
+    console.log(colunas[0].stack);
+    console.log(colunas[1].stack);
+
     pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
 }
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     atualizarListaCompromissos();
