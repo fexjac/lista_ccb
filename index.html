@@ -10,10 +10,15 @@
     <h1>Gerador de Listas</h1>
     <div class='flex-container' >
         <div class='compromissos'>
+            <form id="cabecalhoForm">
+                <label for="localCabecalho">Administração:</label>
+                <input type="text" id="localCabecalho" value="Vilhena-RO">
+                <label for="data">Data da Reunião</label>
+                <input type="text" id="dataCabecalho" value="20/10/2023">
+                <button type="submit">Atualizar Cabeçalho</button>
+            </form>
             <h2>Missões</h2>
-            <form id="compromissoForm">
-                <label for="cabecalho">Cabeçalho:</label>
-                <input type="text" id="cabecalho" value="Congregação Cristã no Brasil">            
+            <form id="compromissoForm">                       
                 <label for="compromisso">Missão:</label>
                 <select id="compromisso" required>
                     <option value="" disabled selected>Selecione a missão</option>
@@ -25,10 +30,10 @@
                 </select>
                 <label for="data">Data e Hora:</label>  
                 <input type="datetime-local" id="data" required>
+                <label for="local">Local:</label>
+                <input type="text" id="local" required> 
                 <label for="anciao">Ancião:</label>
                 <input type="text" id="anciao" required>
-                <label for="local">Local:</label>
-                <input type="text" id="local" required>
                 <button type="submit">Inserir Missão</button>
             </form>
         </div>
@@ -69,7 +74,7 @@
         <button id="salvarDados">Salvar Dados</button>
         <input type="file" id="carregarDados" style="display: none;">
         <label for="carregarDados" id="carregarDadosLabel">Carregar Dados</label>
- </div>
+    </div>
 
     <div class="lists">
         <div id="listaCompromissos">MISSÕES</div>
