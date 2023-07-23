@@ -12,4 +12,4 @@
 - [ ] Salvar uma cópia da lista de forma editável
 - [x] Formatar estéticamente o pdf de forma final
 - [ ] Criar formatação do cabeçalho para personalizar localidade e data
-- [ ] Organizar o html e o css
+- [x] Organizar o html e o css

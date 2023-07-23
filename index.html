@@ -7,11 +7,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div style="display: flex;">
-            <!-- Coluna 1: Formulário para Adicionar Missões -->
-            <div style="flex: 1;">
-                <h2>Missões</h2>
+    <h1>Gerador de Listas</h1>
+    <div class='flex-container' >
+        <div class='compromissos'>
+            <h2>Missões</h2>
                 <form id="compromissoForm">
                     <label for="cabecalho">Cabeçalho:</label>
                     <input type="text" id="cabecalho" value="Congregação Cristã no Brasil">            
@@ -31,14 +30,10 @@
                     <label for="local">Local:</label>
                     <input type="text" id="local" required>
                     <button type="submit">Inserir Missão</button>
-
-                    
-                </form>
-            </div>
-
-            <!-- Coluna 2: Formulário para Novos Obreiros -->
-            <div style="flex: 1;">
-                <h2>Novos Obreiros</h2>
+            </form>
+        </div>
+        <div class='obreiros'>
+            <h2>Novos Obreiros</h2>
                 <form id="obreiroForm">
                     <label for="ministerio">Ministério:</label>
                     <select id="ministerio" required>
@@ -56,31 +51,18 @@
                     <input type="text" id="localObreiro" required>
                     <button type="submit">Inserir Obreiro</button>
                 </form>
-               
-                <div>
-                    
-                </div>
-            </div>
-
-            <!-- Coluna 3: Formulário para Criar Avisos -->
-            <div style="flex: 1;">
-                <h2>Criar Avisos</h2>
-                <form id="avisoForm">
-                    <label for="aviso">Aviso:</label>
-                    <textarea id="aviso" required></textarea>
-                    <br>
-                    <button type="submit">Incluir Aviso</button>
-                </form>
-                <div>
-
-                </div>
-            </div>
-            
         </div>
-
-        
+        <div class='avisos'>
+            <h2>Criar Avisos</h2>
+            <form id="avisoForm">
+                <label for="aviso">Aviso:</label>
+                <textarea id="aviso" required></textarea>
+                <br>
+                <button type="submit">Incluir Aviso</button>
+            </form>            
+        </div>
+       
     </div>
-
     <div class="actions">
         <button id="organizarBtn">Organizar</button>
         <button id="gerarPDFOrganizado">Gerar PDF Organizado</button>
@@ -88,13 +70,14 @@
     </div>
 
     <div class="lists">
-        <div id="listaCompromissos"></div>
-        <div id="listaObreiros"></div>
-        <div id="listaAvisos"></div>
+        <div id="listaCompromissos">MISSÕES</div>
+        <div id="listaObreiros">OBREIROS</div>
+        <div id="listaAvisos">AVISOS</div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
-    <script src="script.js"></script>    
+    <script src="script.js"></script>   
+
 </body>
 </html>

@@ -1,32 +1,36 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #bbdefb;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.column {
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
+h1 {
     text-align: center;
-    margin-bottom: 20px;
+    padding-top: 20px;
 }
 
-form {
+.flex-container {
+
+    display: flex;
+    
+    justify-content: center;     
+
+    background-color: #bbdefb;
+    height: 100%;
+    padding: 15px;
+    gap: 5px;
+
+  }
+
+  .flex-container > div{
+    background: #f0f0f0;
+    border: 3px solid #007bff;
+    border-radius: 5px;
+    padding: 8px;
+  }
+
+  form {
     display: flex;
     flex-direction: column;
 }
@@ -46,7 +50,9 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    padding: 10px;
 }
+
 
 .actions {
     display: flex;
@@ -58,21 +64,7 @@ button {
 .lists {
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
+    justify-content: center;
+    max-width: 800px;
     margin: 20px auto;
-}
-
-#listaCompromissos,
-#listaObreiros,
-#listaAvisos {
-    margin-top: 20px;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-}
-
-/* Estilização específica para a lista de compromissos, obreiros e avisos */
-#listaCompromissos .compromisso-item,
-#listaObreiros .obreiro-item,
-#listaAvisos .aviso-item {
-    margin-bottom: 5px;
 }
