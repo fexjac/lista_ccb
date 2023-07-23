@@ -11,46 +11,46 @@
     <div class='flex-container' >
         <div class='compromissos'>
             <h2>Missões</h2>
-                <form id="compromissoForm">
-                    <label for="cabecalho">Cabeçalho:</label>
-                    <input type="text" id="cabecalho" value="Congregação Cristã no Brasil">            
-                    <label for="compromisso">Missão:</label>
-                    <select id="compromisso" required>
-                        <option value="" disabled selected>Selecione a missão</option>
-                        <option value="Batismo">Batismo</option>
-                        <option value="Reunião Para Mocidade">Reunião Para Mocidade</option>
-                        <option value="Ensaio Regional">Ensaio Regional</option>                
-                        <option value="Santa Ceia">Santa Ceia</option>
-                        <option value="Reunião de Evangelização">Reunião de Evangelização</option>
-                    </select>
-                    <label for="data">Data e Hora:</label>  
-                    <input type="datetime-local" id="data" required>
-                    <label for="anciao">Ancião:</label>
-                    <input type="text" id="anciao" required>
-                    <label for="local">Local:</label>
-                    <input type="text" id="local" required>
-                    <button type="submit">Inserir Missão</button>
+            <form id="compromissoForm">
+                <label for="cabecalho">Cabeçalho:</label>
+                <input type="text" id="cabecalho" value="Congregação Cristã no Brasil">            
+                <label for="compromisso">Missão:</label>
+                <select id="compromisso" required>
+                    <option value="" disabled selected>Selecione a missão</option>
+                    <option value="Batismo">Batismo</option>
+                    <option value="Reunião Para Mocidade">Reunião Para Mocidade</option>
+                    <option value="Ensaio Regional">Ensaio Regional</option>                
+                    <option value="Santa Ceia">Santa Ceia</option>
+                    <option value="Reunião de Evangelização">Reunião de Evangelização</option>
+                </select>
+                <label for="data">Data e Hora:</label>  
+                <input type="datetime-local" id="data" required>
+                <label for="anciao">Ancião:</label>
+                <input type="text" id="anciao" required>
+                <label for="local">Local:</label>
+                <input type="text" id="local" required>
+                <button type="submit">Inserir Missão</button>
             </form>
         </div>
         <div class='obreiros'>
             <h2>Novos Obreiros</h2>
-                <form id="obreiroForm">
-                    <label for="ministerio">Ministério:</label>
-                    <select id="ministerio" required>
-                        <option value="" disabled selected>Selecione o ministério</option>
-                        <option value="Ancião">Ancião</option>
-                        <option value="Diácono">Diácono</option>
-                        <option value="Cooperador">Cooperador</option>
-                        <option value="Coop Jovens">Cooperador de Jovens</option>
-                        <option value="Enc Regional">Encarregado Regional</option>
-                        <option value="Enc Local">Encarregado Local</option>
-                    </select>
-                    <label for="nomeObreiro">Nome:</label>
-                    <input type="text" id="nomeObreiro" required>
-                    <label for="localObreiro">Local:</label>
-                    <input type="text" id="localObreiro" required>
-                    <button type="submit">Inserir Obreiro</button>
-                </form>
+            <form id="obreiroForm">
+                <label for="ministerio">Ministério:</label>
+                <select id="ministerio" required>
+                    <option value="" disabled selected>Selecione o ministério</option>
+                    <option value="Ancião">Ancião</option>
+                    <option value="Diácono">Diácono</option>
+                    <option value="Cooperador">Cooperador</option>
+                    <option value="Coop Jovens">Cooperador de Jovens</option>
+                    <option value="Enc Regional">Encarregado Regional</option>
+                    <option value="Enc Local">Encarregado Local</option>
+                </select>
+                <label for="nomeObreiro">Nome:</label>
+                <input type="text" id="nomeObreiro" required>
+                <label for="localObreiro">Local:</label>
+                <input type="text" id="localObreiro" required>
+                <button type="submit">Inserir Obreiro</button>
+            </form>
         </div>
         <div class='avisos'>
             <h2>Criar Avisos</h2>
@@ -66,8 +66,10 @@
     <div class="actions">
         <button id="organizarBtn">Organizar</button>
         <button id="gerarPDFOrganizado">Gerar PDF Organizado</button>
-        <!--<button id="salvarLista" disabled>Salvar a Lista</button>-->
-    </div>
+        <button id="salvarDados">Salvar Dados</button>
+        <input type="file" id="carregarDados" style="display: none;">
+        <label for="carregarDados" id="carregarDadosLabel">Carregar Dados</label>
+ </div>
 
     <div class="lists">
         <div id="listaCompromissos">MISSÕES</div>

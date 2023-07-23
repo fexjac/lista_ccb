@@ -335,3 +335,54 @@ function gerarPDFCompromissosOrganizados() {
 document.addEventListener('DOMContentLoaded', function() {
     atualizarListaCompromissos();
 });
+
+document.getElementById('salvarDados').addEventListener('click', function() {
+    salvarDados();
+});
+
+document.getElementById('carregarDados').addEventListener('change', function(event) {
+    carregarDados(event);
+});
+
+// Função para salvar os dados em um arquivo JSON
+function salvarDados() {
+    const dados = {
+        compromissos: compromissos,
+        obreiros: obreiros,
+        avisos: avisos
+    };
+
+    const dadosJson = JSON.stringify(dados, null, 2);
+
+    const blob = new Blob([dadosJson], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'dados.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Função para carregar os dados de um arquivo JSON
+function carregarDados(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+        const dadosJson = e.target.result;
+        const dadosCarregados = JSON.parse(dadosJson);
+
+        compromissos = dadosCarregados.compromissos || [];
+        obreiros = dadosCarregados.obreiros || [];
+        avisos = dadosCarregados.avisos || [];
+
+        // Atualizar as listas com os dados carregados
+        atualizarListaCompromissos();
+        atualizarListaObreiros();
+        atualizarListaAvisos();
+    };
+
+    reader.readAsText(file);
+}

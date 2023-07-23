@@ -9,7 +9,8 @@
 - [x] Implementar Hora junto da data * em desenvolvimento
 - [x] Implementar Novos Obreiros
 - [x] Implementar Avisos
-- [ ] Salvar uma cópia da lista de forma editável
+- [x] Salvar uma cópia da lista de forma editável
 - [x] Formatar estéticamente o pdf de forma final
 - [ ] Criar formatação do cabeçalho para personalizar localidade e data
 - [x] Organizar o html e o css
+- [ ] Permitir a edição dos itens criados
