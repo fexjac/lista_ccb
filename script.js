@@ -125,10 +125,6 @@ document.getElementById('avisoForm').addEventListener('submit', function(event) 
   }
   
 
-document.getElementById('gerarPDF').addEventListener('click', function() {
-    gerarPDFCompromissos();
-});
-
 document.getElementById('gerarPDFOrganizado').addEventListener('click', function() {
     gerarPDFCompromissosOrganizados();
 });
@@ -139,6 +135,7 @@ document.getElementById('organizarBtn').addEventListener('click', function() {
     organizarCompromissosPorTipoEData();
     organizarObreirosPorMinisterio();
 });
+
 
 // ordenando e organizando a lista de compromissos
 function organizarCompromissosPorTipoEData() {
@@ -219,30 +216,8 @@ function organizarObreirosPorMinisterio() {
         document.getElementById('listaObreiros').appendChild(ministerioElement);
     }
 }
-// Gerar PDF
-document.getElementById('gerarPDF').addEventListener('click', function() {
-    gerarPDFCompromissos();
-});
-
-function gerarPDFCompromissos() {
-    const docDefinition = {
-        content: []
-    };
-
-    compromissos.forEach(compromisso => {
-        const compromissoDataHora = new Date(compromisso.dataHora);
-        const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
-
-        const linhaTexto = `${compromissoDataHoraFormatted} - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
-
-        docDefinition.content.push({ text: linhaTexto });
-    });
-
-    pdfMake.createPdf(docDefinition).download('compromissos.pdf');
-}
 
 // Gerar PDF organizado
-
 document.getElementById('gerarPDFOrganizado').addEventListener('click', function() {
     gerarPDFCompromissosOrganizados();
 });
@@ -329,33 +304,32 @@ function gerarPDFCompromissosOrganizados() {
     }
 
     // Inserir avisos no PDF
-    const avisosTableData = {
-        widths: [241],
-        body: []
-    };
-
-    avisosTableData.body.push([{ text: 'Avisos', style: 'tipoCompromissoTitle', alignment: 'center' }]);
-    avisosTableData.body.push([{ text: '' }]); // Empty row
-
-    avisos.forEach((aviso) => {
-        avisosTableData.body.push([{ text: aviso.aviso, style: 'compromissoItem' }]);
-    });
-
-    colunas[0].stack.push({ table: JSON.parse(JSON.stringify(avisosTableData)), alignment: 'center' });
-    colunas[1].stack.push({ table: JSON.parse(JSON.stringify(avisosTableData)), alignment: 'center' });
-    colunas[0].stack.push({ text: '', margin: [0, 5] });
-    colunas[1].stack.push({ text: '', margin: [0, 5] });
-
-    colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
-    colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
-
-    docDefinition.content.push({ columns: colunas });
-
-    console.log(colunas[0].stack);
-    console.log(colunas[1].stack);
-
-    pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
-}
+        // Inserir avisos no PDF apenas se houver pelo menos um aviso cadastrado
+        if (avisos.length > 0) {
+            const avisosTableData = {
+                widths: [241],
+                body: []
+            };
+    
+            avisosTableData.body.push([{ text: 'Avisos', style: 'tipoCompromissoTitle', alignment: 'center' }]);
+    
+            avisos.forEach((aviso) => {
+                avisosTableData.body.push([{ text: aviso.aviso, style: 'compromissoItem' }]);
+            });
+    
+            colunas[0].stack.push({ table: JSON.parse(JSON.stringify(avisosTableData)), alignment: 'center' });
+            colunas[1].stack.push({ table: JSON.parse(JSON.stringify(avisosTableData)), alignment: 'center' });
+            colunas[0].stack.push({ text: '', margin: [0, 5] });
+            colunas[1].stack.push({ text: '', margin: [0, 5] });
+        }
+    
+        colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
+        colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
+    
+        docDefinition.content.push({ columns: colunas });
+    
+        pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
+    }
 
 
 document.addEventListener('DOMContentLoaded', function() {
