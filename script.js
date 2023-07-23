@@ -7,6 +7,8 @@ let avisosOrganizados = {}; // Variável global para armazenar os avisos organiz
 
 
 let cabecalhoPDF = 'Congregação Cristã no Brasil';
+let administracao = 'Vilhena';
+let dataReuniao = 'Teste';
 
 document.getElementById('compromissoForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -123,6 +125,13 @@ document.getElementById('avisoForm').addEventListener('submit', function(event) 
       listaAvisos.appendChild(avisoElement);
     });
   }
+
+document.getElementById('atualizarCabecalho').addEventListener('click', function(event) {
+    event.preventDefault();
+    administracao = document.getElementById('localCabecalho').value;
+    dataReuniao = document.getElementById('dataCabecalho').value;
+
+});
   
 
 document.getElementById('gerarPDFOrganizado').addEventListener('click', function() {
@@ -241,6 +250,7 @@ function gerarPDFCompromissosOrganizados() {
         }
     };
 
+
     const colunas = [{ stack: [] }, { stack: [] }];
 
     // Inserir compromissos organizados no PDF
@@ -323,13 +333,17 @@ function gerarPDFCompromissosOrganizados() {
             colunas[1].stack.push({ text: '', margin: [0, 5] });
         }
     
-        colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
-        colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 5] });
-    
+        colunas[0].stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[0].stack.unshift({ text: administracao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[1].stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[1].stack.unshift({ text: administracao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        
         docDefinition.content.push({ columns: colunas });
     
         pdfMake.createPdf(docDefinition).download('compromissos_organizados.pdf');
-    }
+}
 
 
 document.addEventListener('DOMContentLoaded', function() {

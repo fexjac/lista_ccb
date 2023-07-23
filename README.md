@@ -11,7 +11,7 @@
 - [x] Implementar Avisos
 - [x] Salvar uma cópia da lista de forma editável
 - [x] Formatar estéticamente o pdf de forma final
-- [ ] Criar formatação do cabeçalho para personalizar localidade e data
+- [x] Criar formatação do cabeçalho para personalizar localidade e data
 - [x] Organizar o html e o css
 - [ ] Permitir a edição dos itens criados
 - [ ] Refatorar o código
