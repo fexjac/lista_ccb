@@ -1,3 +1,4 @@
+
 let compromissos = [];
 let obreiros = []; // Array para armazenar os obreiros
 let avisos = [];
@@ -244,19 +245,12 @@ document.getElementById('atualizarCabecalho').addEventListener('click', function
     dataReuniao = document.getElementById('dataCabecalho').value;
 
 });
-  
-
-document.getElementById('gerarPDFOrganizado').addEventListener('click', function() {
-    gerarPDFCompromissosOrganizados();
-});
-
 
 
 document.getElementById('organizarBtn').addEventListener('click', function() {
     organizarCompromissosPorTipoEData();
     organizarObreirosPorMinisterio();
 });
-
 
 // ordenando e organizando a lista de compromissos
 function organizarCompromissosPorTipoEData() {
@@ -466,10 +460,6 @@ document.getElementById('salvarDados').addEventListener('click', function() {
     salvarDados();
 });
 
-document.getElementById('carregarDados').addEventListener('change', function(event) {
-    carregarDados(event);
-});
-
 // Função para salvar os dados em um arquivo JSON
 function salvarDados() {
     const dados = {
@@ -490,6 +480,10 @@ function salvarDados() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
+
+document.getElementById('carregarDados').addEventListener('change', function(event) {
+    carregarDados(event);
+});
 
 // Função para carregar os dados de um arquivo JSON
 function carregarDados(event) {
@@ -512,3 +506,5 @@ function carregarDados(event) {
 
     reader.readAsText(file);
 }
+
+
