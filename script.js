@@ -4,7 +4,7 @@ let avisos = [];
 let compromissosOrganizados = {}; // Variável global para armazenar os compromissos organizados
 let obreirosOrganizados = {};
 let avisosOrganizados = {}; // Variável global para armazenar os avisos organizados
-
+let index = -1;
 
 let cabecalhoPDF = 'Congregação Cristã no Brasil';
 let administracao = 'Vilhena';
@@ -42,7 +42,7 @@ function atualizarListaCompromissos() {
     const listaCompromissos = document.getElementById('listaCompromissos');
     listaCompromissos.innerHTML = '';
 
-    compromissos.forEach(compromisso => {
+    compromissos.forEach((compromisso, index) => {
         const compromissoElement = document.createElement('div');
         compromissoElement.classList.add('compromisso-item');
 
@@ -50,10 +50,122 @@ function atualizarListaCompromissos() {
         const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1}/${compromissoDataHora.getFullYear()} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
         const compromissoText = `<strong>${compromissoDataHoraFormatted}</strong> - ${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`;
-        
+
         compromissoElement.innerHTML = compromissoText;
+
+        // Criar botões de editar e excluir
+        const editarButton = document.createElement('button');
+        editarButton.textContent = 'Editar';
+        editarButton.addEventListener('click', () => editarCompromisso(index));
+
+        const excluirButton = document.createElement('button');
+        excluirButton.textContent = 'Excluir';
+        excluirButton.addEventListener('click', () => excluirCompromisso(index));
+
+        compromissoElement.appendChild(editarButton);
+        compromissoElement.appendChild(excluirButton);
+
         listaCompromissos.appendChild(compromissoElement);
     });
+}
+
+function editarCompromisso(index) {
+    const compromisso = compromissos[index];
+
+    // Criar um formulário de edição para o compromisso selecionado
+    const formEdicao = document.createElement('form');
+
+    // Campo para editar o tipo de compromisso
+    const compromissoSelect = document.createElement('select');
+    compromissoSelect.setAttribute('id', 'compromissoEdicao');
+
+    // Opção inicial desabilitada e selecionada
+    const optionInicial = document.createElement('option');
+    optionInicial.text = 'Selecione a missão';
+    optionInicial.value = '';
+    optionInicial.disabled = true;
+    optionInicial.selected = true;
+    compromissoSelect.appendChild(optionInicial);
+
+    // Opções para o tipo de compromisso
+    const tiposCompromisso = ['Batismo', 'Reunião Para Mocidade', 'Ensaio Regional', 'Santa Ceia', 'Reunião de Evangelização', 'Outro'];
+    tiposCompromisso.forEach((tipo) => {
+        const option = document.createElement('option');
+        option.text = tipo;
+        option.value = tipo;
+        if (compromisso.compromisso === tipo) {
+            option.selected = true;
+        }
+        compromissoSelect.appendChild(option);
+    });
+    formEdicao.appendChild(compromissoSelect);
+
+    // Campo para editar a data e hora do compromisso
+    const dataHoraInput = document.createElement('input');
+    dataHoraInput.setAttribute('type', 'datetime-local');
+    dataHoraInput.setAttribute('id', 'dataHoraEdicao');
+    dataHoraInput.setAttribute('value', compromisso.dataHora);
+    formEdicao.appendChild(dataHoraInput);
+
+    // Campo para editar o responsável pelo compromisso
+    const responsavelInput = document.createElement('input');
+    responsavelInput.setAttribute('type', 'text');
+    responsavelInput.setAttribute('id', 'responsavelEdicao');
+    responsavelInput.setAttribute('value', compromisso.responsavel);
+    formEdicao.appendChild(responsavelInput);
+
+    // Campo para editar o local do compromisso
+    const localInput = document.createElement('input');
+    localInput.setAttribute('type', 'text');
+    localInput.setAttribute('id', 'localEdicao');
+    localInput.setAttribute('value', compromisso.local);
+    formEdicao.appendChild(localInput);
+
+    // Botão para salvar as alterações
+    const salvarButton = document.createElement('button');
+    salvarButton.textContent = 'Salvar';
+    salvarButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        // Atualizar os dados do compromisso com as informações do formulário de edição
+        compromisso.compromisso = compromissoSelect.options[compromissoSelect.selectedIndex].value;
+        compromisso.dataHora = dataHoraInput.value;
+        compromisso.responsavel = responsavelInput.value;
+        compromisso.local = localInput.value;
+
+        // Ordenar os compromissos novamente após a edição
+        compromissos.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
+
+        // Atualizar a lista de compromissos na página
+        atualizarListaCompromissos();
+
+        // Remover o formulário de edição após salvar as alterações
+        formEdicao.remove();
+    });
+    formEdicao.appendChild(salvarButton);
+
+    // Botão para cancelar a edição
+    const cancelarButton = document.createElement('button');
+    cancelarButton.textContent = 'Cancelar';
+    cancelarButton.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        // Remover o formulário de edição sem salvar as alterações
+        formEdicao.remove();
+    });
+    formEdicao.appendChild(cancelarButton);
+
+    // Inserir o formulário de edição antes do compromisso na lista
+    const compromissoElement = document.querySelector(`.compromisso-item:nth-child(${index + 1})`);
+    compromissoElement.insertAdjacentElement('beforebegin', formEdicao);
+}
+
+function excluirCompromisso(index) {
+
+    compromissos.splice(index, 1);
+
+
+    atualizarListaCompromissos();
 }
 
 document.getElementById('obreiroForm').addEventListener('submit', function (event) {
