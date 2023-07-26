@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Missões</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Gerador de Listas</h1>
+    <div class="header">
+        <h1>Gerador de Listas</h1>
+        <form id="cabecalhoForm">
+            <label for="administracaoCabecalho">Administração:</label>
+            <input type="text" id="localCabecalho" value="Vilhena-RO">
+            <label for="data">Data</label>
+            <input type="text" id="dataCabecalho" value="20/10/2023">
+            <button type="submit" id="atualizarCabecalho">Atualizar Cabeçalho</button>
+        </form>
+        <a href="https://github.com/fexjac/lista_ccb" target="_blank">Colabore com o projeto no GitHub</a>
+    </div>
+    
     <div class='flex-container' >
         <div class='compromissos'>
-            <form id="cabecalhoForm">
-                <label for="administracaoCabecalho">Administração:</label>
-                <input type="text" id="localCabecalho" value="Vilhena-RO">
-                <label for="data">Data da Reunião</label>
-                <input type="text" id="dataCabecalho" value="20/10/2023">
-                <button type="submit" id="atualizarCabecalho">Atualizar Cabeçalho</button>
-            </form>
+            
             <h2>Missões</h2>
             <form id="compromissoForm">                       
                 <label for="compromisso">Missão:</label>
@@ -75,7 +81,7 @@
         <button id="gerarPDFOrganizado">Gerar PDF Organizado</button>
         <button id="salvarDados">Salvar Dados</button>
         <input type="file" id="carregarDados" style="display: none;">
-        <label for="carregarDados" id="carregarDadosLabel">Carregar Dados</label>
+        <label for="carregarDados" id="carregarDadosLabel">Carregar Dados...</label>
     </div>
 
     <div class="lists">
