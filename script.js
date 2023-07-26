@@ -439,11 +439,11 @@ function gerarPDFCompromissosOrganizados() {
             colunas[1].stack.push({ text: '', margin: [0, 5] });
         }
     
-        colunas[0].stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
-        colunas[0].stack.unshift({ text: administracao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[0].stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 12, bold: true, margin: [0, 0] });
+        colunas[0].stack.unshift({ text: administracao, alignment: 'center', fontSize: 12, bold: true, margin: [0, 0] });
         colunas[0].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
-        colunas[1].stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
-        colunas[1].stack.unshift({ text: administracao, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+        colunas[1].stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 12, bold: true, margin: [0, 0] });
+        colunas[1].stack.unshift({ text: administracao, alignment: 'center', fontSize: 12, bold: true, margin: [0, 0] });
         colunas[1].stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
         
         docDefinition.content.push({ columns: colunas });
