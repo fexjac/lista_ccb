@@ -129,13 +129,24 @@ button {
 .orientacao {
     font-size: 16px;
     text-align: center;
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 5px;
+    padding: 5px;
     background-color: #f0f0f0;
     border-radius: 5px;
 }
 
 .orientacao strong {
+    font-weight: bold;
+}
+.creditos {
+    font-size: 16px;
+    text-align: right;
+    padding: 2px;
+    background-color: #007bff;
+    color: #f0f0f0;
+}
+
+.creditos strong {
     font-weight: bold;
 }
 
