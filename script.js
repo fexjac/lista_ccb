@@ -484,7 +484,6 @@ function salvarDados() {
 document.getElementById('carregarDados').addEventListener('change', function(event) {
     carregarDados(event);
 });
-
 // Função para carregar os dados de um arquivo JSON
 function carregarDados(event) {
     const file = event.target.files[0];
