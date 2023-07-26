@@ -39,7 +39,18 @@ body {
     color: #f0f0f0;
     padding-right: 20px;
 }
+.header form button {
+    background-color: #007bff; /* Cor de fundo do botão (azul) */
+    color: #fff; /* Cor do texto do botão (branco) */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px;
+}
 
+.header form button:hover {
+    background-color: #0056b3; 
+}
 
 .flex-container {
 
