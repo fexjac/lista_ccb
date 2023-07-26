@@ -101,6 +101,7 @@ button {
     justify-content: center;
     max-width: 800px;
     margin: 20px auto;
+    align-items: center;
 }
 
 #carregarDadosLabel {
@@ -112,6 +113,49 @@ button {
     cursor: pointer;
     padding: 10px;
     text-align: center;
+}
+
+Ótimo! Para adicionar a orientação para uso, você pode simplesmente incluir um elemento de texto abaixo do formulário de avisos, explicando os passos necessários para usar o sistema. Vou fornecer uma sugestão de HTML e CSS para adicionar essa orientação:
+
+HTML:
+
+html
+Copy code
+<!-- ... Seu código HTML anterior ... -->
+<div class='avisos'>
+    <h2>Criar Avisos</h2>
+    <form id="avisoForm">
+        <!-- Seus campos de formulário para criar avisos aqui... -->
+    </form>
+    <p class="orientacao">
+        <strong>Orientação para uso:</strong><br>
+        1. Preencha os dados da administração e a data, em seguida, clique em "Atualizar Cabeçalho".<br>
+        2. Inclua os itens necessários na seção de Missões e Obreiros.<br>
+        3. Clique no botão "Organizar" para organizar a lista.<br>
+        4. Finalmente, clique em "Gerar PDF Organizado" para gerar o PDF da lista organizada.<br>
+    </p>
+</div>
+<!-- ... O restante do seu código HTML ... -->
+CSS:
+
+css
+Copy code
+/* ... Seu CSS anterior ... */
+.avisos {
+    /* Estilo para a div que contém o formulário de avisos */
+}
+
+.orientacao {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.orientacao strong {
+    font-weight: bold;
 }
 
 #carregarDadosLabel:hover {
