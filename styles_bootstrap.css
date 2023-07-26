@@ -1,0 +1,85 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.navbar h1 {
+    margin: 0;
+    color: #f0f0f0;
+}
+
+.form-inline label,
+.form-inline input,
+.form-inline button {
+    margin: 0 5px;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.compromissos,
+.obreiros,
+.avisos {
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.orientacao {
+    font-size: 16px;
+    text-align: center;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.orientacao strong {
+    font-weight: bold;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.lists {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.lists > div {
+    flex: 1;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.creditos {
+    font-size: 16px;
+    text-align: right;
+    padding: 2px;
+    background-color: #007bff;
+    color: #f0f0f0;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.creditos strong {
+    font-weight: bold;
+}

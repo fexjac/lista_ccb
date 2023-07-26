@@ -481,6 +481,10 @@ function salvarDados() {
     URL.revokeObjectURL(url);
 }
 
+document.getElementById('carregarDadosBtn').addEventListener('click', function() {
+    document.getElementById('carregarDados').click();
+});
+
 document.getElementById('carregarDados').addEventListener('change', function(event) {
     carregarDados(event);
 });

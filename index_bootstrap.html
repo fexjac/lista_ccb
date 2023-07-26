@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Missões</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <h1 class="navbar-brand">Gerador de Listas</h1>
+        <form class="form-inline" id="cabecalhoForm">
+            <label for="administracaoCabecalho">Administração:</label>
+            <input type="text" class="form-control mr-sm-2" id="localCabecalho" value="Vilhena-RO">
+            <label for="data">Data: </label>
+            <input type="text" class="form-control mr-sm-2" id="dataCabecalho" value="20/10/2023">
+            <button type="submit" class="btn btn-outline-light" id="atualizarCabecalho">Atualizar Cabeçalho</button>
+        </form>
+        <a href="https://github.com/fexjac/lista_ccb" class="btn btn-outline-light" target="_blank">Colabore no GitHub</a>
+    </nav>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col">
+                <div class="compromissos">
+                    <h2>Missões</h2>
+                    <form id="compromissoForm">                       
+                        <label for="compromisso">Missão:</label>
+                        <select id="compromisso" class="form-control" required>
+                            <option value="" disabled selected>Selecione a missão</option>
+                            <option value="Batismo">Batismo</option>
+                            <option value="Reunião Para Mocidade">Reunião Para Mocidade</option>
+                            <option value="Ensaio Regional">Ensaio Regional</option>                
+                            <option value="Santa Ceia">Santa Ceia</option>
+                            <option value="Reunião de Evangelização">Reunião de Evangelização</option>
+                            <option value="Ensaio Extra">Ensaio Extra</option>
+                            <option value="Reunião">Reunião</option>
+                        </select>
+                        <label for="data">Data e Hora:</label>  
+                        <input type="datetime-local" id="data" class="form-control" required>
+                        <label for="local">Local:</label>
+                        <input type="text" id="local" class="form-control" required> 
+                        <label for="anciao">Ancião:</label>
+                        <input type="text" id="anciao" class="form-control" required>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Inserir Missão</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <div class="obreiros">
+                    <h2>Novos Obreiros</h2>
+                    <form id="obreiroForm">
+                        <label for="ministerio">Ministério:</label>
+                        <select id="ministerio" class="form-control" required>
+                            <option value="" disabled selected>Selecione o ministério</option>
+                            <option value="Ancião">Ancião</option>
+                            <option value="Diácono">Diácono</option>
+                            <option value="Cooperador">Cooperador</option>
+                            <option value="Coop Jovens">Cooperador de Jovens</option>
+                            <option value="Enc Regional">Encarregado Regional</option>
+                            <option value="Enc Local">Encarregado Local</option>
+                        </select>
+                        <label for="nomeObreiro">Nome:</label>
+                        <input type="text" id="nomeObreiro" class="form-control" required>
+                        <label for="localObreiro">Local:</label>
+                        <input type="text" id="localObreiro" class="form-control" required>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Inserir Obreiro</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <div class="avisos">
+                    <h2>Criar Avisos</h2>
+                    <form id="avisoForm">
+                        <label for="aviso">Aviso:</label>
+                        <textarea id="aviso" class="form-control" required></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Incluir Aviso</button>
+                    </form>   
+                    <p class="orientacao mt-4">
+                        <strong>Orientação para uso:</strong><br>
+                        1. Preencha os dados da administração e a data,  em seguida, clique em "Atualizar Cabeçalho".<br>
+                        2. Inclua os itens necessários na seção de Missões e Obreiros.<br>
+                        3. Clique no botão "Organizar" para organizar a lista.<br>
+                        4. Finalmente, clique em "Gerar PDF Organizado" para gerar o PDF da lista organizada.<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container actions mt-4 d-flex justify-content-center">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button id="organizarBtn" class="btn btn-primary">Organizar</button>
+                <button id="gerarPDFOrganizado" class="btn btn-primary">Gerar PDF Organizado</button>
+                <button id="salvarDados" class="btn btn-primary">Salvar Dados</button>
+                <input type="file" id="carregarDados" accept=".json" style="display: none;">
+                <button type="button" id="carregarDadosBtn" class="btn btn-primary">Carregar Dados...</button>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="container lists mt-4 d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div id="listaCompromissos" class="p-3">MISSÕES</div>
+                <div id="listaObreiros" class="p-3">OBREIROS</div>
+                <div id="listaAvisos" class="p-3">AVISOS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-primary">
+        <div class="container creditos mt-4">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <p>
+                        <strong>Desenvolvido por Jaison A da Costa</strong><br>
+                        Administração Vilhena-RO<br>
+                        Contato Whats (69)98132-0533
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

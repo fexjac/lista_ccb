@@ -31,7 +31,7 @@ body {
 .header form label,
 .header form input,
 .header form button {
-    margin: 0 5px; /* Espaçamento entre os elementos do form */
+    margin: 5px; /* Espaçamento entre os elementos do form */
 }
 
 .header a {
