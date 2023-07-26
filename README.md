@@ -14,5 +14,5 @@
 - [x] Criar formatação do cabeçalho para personalizar localidade e data
 - [x] Organizar o html e o css
 - [x] Permitir a edição dos itens criados
-- [ ] Implementar a paginação
+- [x] Implementar a paginação
 - [ ] Refatorar o código
