@@ -9,7 +9,7 @@ let index = -1;
 
 let cabecalhoPDF = 'Congregação Cristã no Brasil';
 let administracao = 'Vilhena';
-let dataReuniao = 'Teste';
+let dataReuniao = '20/10/2023';
 
 document.getElementById('compromissoForm').addEventListener('submit', function(event) {
     event.preventDefault();
