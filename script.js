@@ -514,41 +514,107 @@ function carregarDados(event) {
 
 function gerarPDFPrevia() {
     const docDefinition = {
-        // Configuração do PDF
-        pageSize: 'A4',
-        pageOrientation: 'portrait',
-        content: [], // Conteúdo do PDF será adicionado aqui
-        styles: {
-            // Estilos do PDF
+    pageSize: 'A4',
+    pageOrientation: 'portrait',
+    content: [],
+    styles: {
+        tipoCompromissoTitle: {
+            fontSize: 11,
+            bold: true,
+            margin: [0, 2],
+            fillColor: '#CCCCCC'
+        },
+        compromissoItem: {
+            fontSize: 9,
+            margin: [0, 2]
         }
+    }
+};
+
+const coluna = { stack: [] };
+
+// Inserir compromissos organizados no PDF
+for (const tipoCompromisso in compromissosOrganizados) {
+    const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
+    const compromissosTableData = {
+        widths: [69, 90, 65],
+        body: []
     };
 
-    // Adicione o cabeçalho e outros conteúdos que desejar no PDF
-    docDefinition.content.push({ text: cabecalhoPDF, alignment: 'center', fontSize: 16, bold: true });
-    docDefinition.content.push({ text: administracao, alignment: 'center', fontSize: 14, bold: true });
-    docDefinition.content.push({ text: dataReuniao, alignment: 'center', fontSize: 12, bold: true });
+    compromissosTableData.body.push([{ text: tipoCompromisso, colSpan: 3, style: 'tipoCompromissoTitle', alignment: 'center' }, {}, {}]);
+    compromissosTableData.body.push([
+        { text: 'Data', style: 'compromissoItem', bold: true },
+        { text: 'Local', style: 'compromissoItem', bold: true },
+        { text: 'Ancião', style: 'compromissoItem', bold: true }
+    ]);
 
-    // Adicione os compromissos no PDF
-    for (const tipoCompromisso in compromissosOrganizados) {
-        const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
+    compromissosDoTipo.forEach((compromisso) => {
+        const compromissoDataHora = new Date(compromisso.dataHora);
+        const diaSemanaAbreviado = compromissoDataHora.toLocaleString('pt-BR', { weekday: 'short' }).toUpperCase();
+        const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1} ${diaSemanaAbreviado} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
 
-        docDefinition.content.push({ text: tipoCompromisso, alignment: 'center', fontSize: 14, bold: true });
+        compromissosTableData.body.push([
+            { text: compromissoDataHoraFormatted, style: 'compromissoItem' },
+            { text: compromisso.local, style: 'compromissoItem' },
+            { text: compromisso.responsavel, style: 'compromissoItem' }
+        ]);
+    });
 
-        compromissosDoTipo.forEach((compromisso) => {
-            const compromissoDataHora = new Date(compromisso.dataHora);
-            const diaSemanaAbreviado = compromissoDataHora.toLocaleString('pt-BR', { weekday: 'short' }).toUpperCase();
-            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1} ${diaSemanaAbreviado} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
+    coluna.stack.push({ table: JSON.parse(JSON.stringify(compromissosTableData)), alignment: 'center' });
+    coluna.stack.push({ text: '', margin: [0, 5] });
+}
 
-            docDefinition.content.push({ text: compromissoDataHoraFormatted, alignment: 'left', fontSize: 10 });
-            docDefinition.content.push({ text: `${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`, alignment: 'left', fontSize: 10 });
-        });
+// Inserir obreiros organizados no PDF
+for (const ministerio in obreirosOrganizados) {
+    const obreirosDoMinisterio = obreirosOrganizados[ministerio];
+    const obreirosTableData = {
+        widths: [115, 118],
+        body: []
+    };
 
-        // Adicionar uma quebra de página após cada tipo de compromisso
-        docDefinition.content.push({ text: '', pageBreak: 'after' });
-    }
+    obreirosTableData.body.push([{ text: ministerio, colSpan: 2, style: 'tipoCompromissoTitle', alignment: 'center' }, {}]);
+    obreirosTableData.body.push([
+        { text: 'Nome', style: 'compromissoItem', bold: true },
+        { text: 'Local', style: 'compromissoItem', bold: true },
+    ]);
 
-    // Gere o PDF com a biblioteca pdfMake
-    const pdf = pdfMake.createPdf(docDefinition);
+    obreirosDoMinisterio.forEach((obreiro) => {
+        obreirosTableData.body.push([
+            { text: obreiro.nomeObreiro, style: 'compromissoItem' },
+            { text: obreiro.localObreiro, style: 'compromissoItem' }
+        ]);
+    });
+
+    coluna.stack.push({ table: JSON.parse(JSON.stringify(obreirosTableData)), alignment: 'center' });
+    coluna.stack.push({ text: '', margin: [0, 5] });
+}
+
+// Inserir avisos no PDF apenas se houver pelo menos um aviso cadastrado
+if (avisos.length > 0) {
+    const avisosTableData = {
+        widths: [241],
+        body: []
+    };
+
+    avisosTableData.body.push([{ text: 'Avisos', style: 'tipoCompromissoTitle', alignment: 'center' }]);
+
+    avisos.forEach((aviso) => {
+        avisosTableData.body.push([{ text: aviso.aviso, style: 'compromissoItem' }]);
+    });
+
+    coluna.stack.push({ table: JSON.parse(JSON.stringify(avisosTableData)), alignment: 'center' });
+    coluna.stack.push({ text: '', margin: [0, 5] });
+}
+
+coluna.stack.unshift({ text: dataReuniao, alignment: 'center', fontSize: 12, bold: true, margin: [0, 0] });
+coluna.stack.unshift({ text: administracao, alignment: 'center', fontSize: 12, bold: true, margin: [0, 0] });
+coluna.stack.unshift({ text: cabecalhoPDF, alignment: 'center', fontSize: 14, bold: true, margin: [0, 1] });
+
+docDefinition.content.push(coluna);
+
+// Gere o PDF com a biblioteca pdfMake
+const pdf = pdfMake.createPdf(docDefinition);
+
 
     // Exiba a prévia do PDF
     pdf.getDataUrl((dataUrl) => {
