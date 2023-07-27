@@ -18,7 +18,7 @@
 - [ ] Refatorar o código
 
 - [ ] Visualizar prévia do pdf em tela
-    - [ ] Adicionar a vlsualização na tela da lista
+    - [x] Adicionar a vlsualização na tela da lista
     - [ ] Separar a formatação da função de gerar o pdf
     - [ ] Refatorar as funções de baixar e exibir  a lista em tela
 
