@@ -16,3 +16,12 @@
 - [x] Permitir a edição dos itens criados
 - [x] Implementar a paginação
 - [ ] Refatorar o código
+
+- [ ] Visualizar prévia do pdf em tela
+    - [ ] Adicionar a vlsualização na tela da lista
+    - [ ] Separar a formatação da função de gerar o pdf
+    - [ ] Refatorar as funções de baixar e exibir  a lista em tela
+
+- [ ] Manter a listagem dos itens com botões de edição
+    - [ ] Inserir a função de organização automática ao inserir itens
+

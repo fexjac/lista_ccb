@@ -37,6 +37,8 @@ document.getElementById('compromissoForm').addEventListener('submit', function(e
 
     // Exibir a lista de compromissos após adicionar um novo
     atualizarListaCompromissos();
+    organizarCompromissosPorTipoEData();
+    gerarPDFPrevia();
 });
 
 function atualizarListaCompromissos() {
@@ -510,4 +512,47 @@ function carregarDados(event) {
     reader.readAsText(file);
 }
 
+function gerarPDFPrevia() {
+    const docDefinition = {
+        // Configuração do PDF
+        pageSize: 'A4',
+        pageOrientation: 'portrait',
+        content: [], // Conteúdo do PDF será adicionado aqui
+        styles: {
+            // Estilos do PDF
+        }
+    };
 
+    // Adicione o cabeçalho e outros conteúdos que desejar no PDF
+    docDefinition.content.push({ text: cabecalhoPDF, alignment: 'center', fontSize: 16, bold: true });
+    docDefinition.content.push({ text: administracao, alignment: 'center', fontSize: 14, bold: true });
+    docDefinition.content.push({ text: dataReuniao, alignment: 'center', fontSize: 12, bold: true });
+
+    // Adicione os compromissos no PDF
+    for (const tipoCompromisso in compromissosOrganizados) {
+        const compromissosDoTipo = compromissosOrganizados[tipoCompromisso];
+
+        docDefinition.content.push({ text: tipoCompromisso, alignment: 'center', fontSize: 14, bold: true });
+
+        compromissosDoTipo.forEach((compromisso) => {
+            const compromissoDataHora = new Date(compromisso.dataHora);
+            const diaSemanaAbreviado = compromissoDataHora.toLocaleString('pt-BR', { weekday: 'short' }).toUpperCase();
+            const compromissoDataHoraFormatted = `${compromissoDataHora.getDate()}/${compromissoDataHora.getMonth() + 1} ${diaSemanaAbreviado} ${compromissoDataHora.getHours().toString().padStart(2, '0')}:${compromissoDataHora.getMinutes().toString().padStart(2, '0')}`;
+
+            docDefinition.content.push({ text: compromissoDataHoraFormatted, alignment: 'left', fontSize: 10 });
+            docDefinition.content.push({ text: `${compromisso.compromisso} (Anciao: ${compromisso.responsavel}) - Local: ${compromisso.local}`, alignment: 'left', fontSize: 10 });
+        });
+
+        // Adicionar uma quebra de página após cada tipo de compromisso
+        docDefinition.content.push({ text: '', pageBreak: 'after' });
+    }
+
+    // Gere o PDF com a biblioteca pdfMake
+    const pdf = pdfMake.createPdf(docDefinition);
+
+    // Exiba a prévia do PDF
+    pdf.getDataUrl((dataUrl) => {
+        const pdfPreviewElement = document.getElementById('pdfPreview');
+        pdfPreviewElement.innerHTML = `<iframe src="${dataUrl}" width="100%" height="500px"></iframe>`;
+    });
+}
