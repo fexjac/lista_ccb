@@ -12,6 +12,7 @@ body {
     align-items: center;
     background-color: #0088cc; /* Cor de fundo atual */
     padding: 10px;
+    flex-wrap: wrap;
 }
 
 .header h1 {
@@ -26,6 +27,7 @@ body {
     align-items: center; /* Centraliza os elementos verticalmente no form */
     flex-direction:row;
     color: #f0f0f0;
+    flex-wrap: wrap;
 }
 
 .header form label,
@@ -62,6 +64,7 @@ body {
     height: 100%;
     padding: 15px;
     gap: 5px;
+    flex-wrap: wrap;
 
   }
 
